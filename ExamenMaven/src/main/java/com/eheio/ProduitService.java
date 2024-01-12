@@ -29,9 +29,17 @@ public class ProduitService {
 	    private boolean produitExiste(Long id) {
 	        return produits.stream().anyMatch(produit -> produit.getId().equals(id));
 	    }
+
 	    private boolean produitExiste(String nom) {
 	        return produits.stream().anyMatch(produit -> produit.getNom().equals(nom));
 	    }
+        public void mettreAJourProduit(Produit produit) throws Exception {
+	        if (!produitExiste(produit.getId())) {
+	            throw new Exception("Produit non trouvé pour la mise à jour.");
+	        }
+	        if (produit.getPrix() < 0 || produit.getQuantite() < 0) {
+	            throw new Exception("Le prix et la quantité doivent être positifs.");
+	        }
+	    }
 }
-
 
