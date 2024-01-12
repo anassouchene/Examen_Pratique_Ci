@@ -6,8 +6,21 @@ public class ProduitService {
 	    public ProduitService() {
 	        this.produits = new ArrayList<>();
 	    }
-	    
-	    public void supprimerProduit(Long id) throws Exception {
+
+	    public void ajouterProduit(Produit produit) throws Exception
+	 {
+	       
+	        if (produitExiste(produit.getId()) || produitExiste(produit.getNom()))
+		 {
+	            throw new Exception("Un produit avec le même ID ou nom existe déjà.");
+	        }
+	        if (produit.getPrix() < 0 || produit.getQuantite() < 0) 
+		{
+	            throw new Exception("Le prix et la quantité doivent être positifs.");
+	        }
+	        produits.add(produit);
+	    }
+  	    public void supprimerProduit(Long id) throws Exception {
 	        if (!produitExiste(id)) {
 	            throw new Exception("Produit non trouvé pour la suppression.");
 	        }
@@ -20,3 +33,5 @@ public class ProduitService {
 	        return produits.stream().anyMatch(produit -> produit.getNom().equals(nom));
 	    }
 }
+
+
